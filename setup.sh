@@ -113,8 +113,14 @@ mkdir -p "$HOME/.config/karabiner"
 cp "$SCRIPT_DIR/config/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
 echo "Karabiner configured."
 
+echo "==> Setting wallpaper..."
+osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$SCRIPT_DIR/wallpaper/wallpaper.jpg\""
+echo "Wallpaper set."
+
 echo "==> Configuring Dock..."
 defaults write com.apple.dock launchanim -bool false
+defaults write com.apple.WindowManager StandardHideWidgets -int 1
+defaults write com.apple.WindowManager StageManagerHideWidgets -int 1
 defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock mineffect -string "scale"
 dockutil --remove all --no-restart
