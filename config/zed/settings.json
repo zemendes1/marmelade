@@ -7,20 +7,22 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "icon_theme": "Catppuccin Mocha",
+  "cli_default_open_behavior": "new_window",
   "disable_ai": true,
   "agent": {
     "sidebar_side": "right",
     "button": false,
     "favorite_models": [],
-    "model_parameters": []
+    "model_parameters": [],
   },
   "project_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "autosave": {
     "after_delay": {
-      "milliseconds": 1000
-    }
+      "milliseconds": 1000,
+    },
   },
   "vim_mode": true,
   "ui_font_size": 16,
@@ -28,6 +30,6 @@
   "theme": {
     "mode": "system",
     "light": "Ayu Light",
-    "dark": "One Dark"
-  }
+    "dark": "One Dark",
+  },
 }
