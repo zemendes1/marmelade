@@ -74,6 +74,15 @@ else
   echo "yabai installed."
 fi
 
+echo "==> Checking skhd-zig..."
+if brew list skhd-zig &>/dev/null 2>&1; then
+  echo "skhd-zig already installed."
+else
+  echo "Installing skhd-zig..."
+  brew install jackielii/tap/skhd-zig
+  echo "skhd-zig installed."
+fi
+
 for pkg in k9s git gh ffmpeg awscli; do
   echo "==> Checking $pkg..."
   if brew list "$pkg" &>/dev/null 2>&1; then
@@ -118,9 +127,10 @@ osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \
 echo "Wallpaper set."
 
 echo "==> Configuring Dock..."
+defaults write com.apple.TextInputMenu visible -bool true
 defaults write com.apple.dock launchanim -bool false
+defaults write com.apple.dock autohide -bool true
 defaults write com.apple.WindowManager StandardHideWidgets -int 1
-defaults write com.apple.WindowManager StageManagerHideWidgets -int 1
 defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock mineffect -string "scale"
 dockutil --remove all --no-restart
@@ -136,3 +146,6 @@ dockutil --add /Applications/DBeaver.app --no-restart
 dockutil --add /System/Applications/System\ Settings.app --no-restart
 killall Dock
 echo "Dock configured."
+
+echo ""
+echo "==> Done! Please restart your Mac for all changes to take effect."
