@@ -56,11 +56,13 @@ PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microso
 DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
 UTILITIES=(notunes bluesnooze caffeine karabiner-elements raycast neardrop)
 
+# ─── Apps ────────────────────────────────────────────────────────────────────
+
 install_apps "Productivity" "${PRODUCTIVITY[@]}"
 install_apps "Development" "${DEVELOPMENT[@]}"
 install_apps "Utilities" "${UTILITIES[@]}"
 
-# ─── Dev Utils ───────────────────────────────────────────────────────────────
+# ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 echo "==> Development Packages"
 DEV_PKGS=(yabai skhd-zig k9s git gh ffmpeg awscli just lazygit lazydocker)
@@ -76,7 +78,7 @@ while IFS= read -r pkg; do
   esac
 done <<< "$SELECTED"
 
-# ─── Configs ─────────────────────────────────────────────────────────────────────
+# ─── Config ──────────────────────────────────────────────────────────────────
 
 echo "==> Configuring Ghostty..."
 mkdir -p "$HOME/.config/ghostty"
@@ -129,6 +131,8 @@ dockutil --add /System/Applications/System\ Settings.app --no-restart
 killall Dock
 killall ControlCenter
 echo "Dock configured."
+
+# ─── System ──────────────────────────────────────────────────────────────────
 
 echo "==> Enabling Dark Mode..."
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
