@@ -97,6 +97,11 @@ chmod +x "$HOME/.config/yabai/yabairc"
 yabai --start-service
 echo "yabai configured."
 
+echo "==> Configuring skhd..."
+mkdir -p "$HOME/.config/skhd"
+cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
+echo "skhd configured."
+
 echo "==> Configuring Karabiner..."
 mkdir -p "$HOME/.config/karabiner"
 cp "$SCRIPT_DIR/config/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
