@@ -20,6 +20,9 @@ EOF
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+install_pkg()  { brew list "$1" &>/dev/null 2>&1 && echo "$1 already installed." || { yes | brew install "${2:-$1}" && echo "$1 installed."; }; }
+install_cask() { brew list --cask "$1" &>/dev/null 2>&1 && echo "$1 already installed." || { brew install --cask "$1" && echo "$1 installed."; }; }
+
 echo "==> Checking Homebrew..."
 if command -v brew &>/dev/null; then
   echo "Homebrew already installed: $(brew --version | head -1)"
@@ -29,81 +32,51 @@ else
   echo "Homebrew installed."
 fi
 
-for cask in zen keeper-password-manager slack claude-code linear zed spotify docker keka notunes bluesnooze obsidian dbeaver-community karabiner-elements caffeine openmtp raycast ghostty; do
-  echo "==> Checking $cask..."
-  if brew list --cask "$cask" &>/dev/null 2>&1; then
-    echo "$cask already installed."
-  else
-    echo "Installing $cask..."
-    brew install --cask "$cask"
-    echo "$cask installed."
-  fi
-done
+install_apps() {
+  local header=$1; shift
+  local csv selected
+  csv=$(IFS=,; echo "$*")
+  selected=$(printf '%s\n' "$@" | gum choose --no-limit --selected="$csv" --header "$header")
+  while IFS= read -r app; do
+    [[ -z "$app" ]] && continue
+    case "$app" in
+      neardrop)
+        brew list neardrop &>/dev/null 2>&1 && echo "neardrop already installed." || {
+          brew install grishka/grishka/neardrop
+          sudo xattr -r -d com.apple.quarantine "/Applications/NearDrop.app"
+          echo "NearDrop installed."
+        }
+        ;;
+      *) install_cask "$app" ;;
+    esac
+  done <<< "$selected"
+}
 
-echo "==> Checking NearDrop..."
-if brew list neardrop &>/dev/null 2>&1; then
-  echo "NearDrop already installed."
-else
-  echo "Installing NearDrop..."
-  brew install grishka/grishka/neardrop
-  sudo xattr -r -d com.apple.quarantine "/Applications/NearDrop.app"
-  echo "NearDrop installed."
-fi
+PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microsoft-teams claude-code spotify)
+DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
+UTILITIES=(notunes bluesnooze caffeine karabiner-elements raycast neardrop)
 
-# ─── Microsoft ───────────────────────────────────────────────────────────────
-
-for cask in onedrive microsoft-teams; do
-  echo "==> Checking $cask..."
-  if brew list --cask "$cask" &>/dev/null 2>&1; then
-    echo "$cask already installed."
-  else
-    echo "Installing $cask..."
-    brew install --cask "$cask"
-    echo "$cask installed."
-  fi
-done
+install_apps "Productivity" "${PRODUCTIVITY[@]}"
+install_apps "Development" "${DEVELOPMENT[@]}"
+install_apps "Utilities" "${UTILITIES[@]}"
 
 # ─── Dev Utils ───────────────────────────────────────────────────────────────
 
-echo "==> Checking yabai..."
-if brew list yabai &>/dev/null 2>&1; then
-  echo "yabai already installed."
-else
-  echo "Installing yabai..."
-  brew install asmvik/formulae/yabai
-  echo "yabai installed."
-fi
+echo "==> Development Packages"
+DEV_PKGS=(yabai skhd-zig k9s git gh ffmpeg awscli just lazygit lazydocker)
+DEV_PKGS_CSV=$(IFS=,; echo "${DEV_PKGS[*]}")
+SELECTED=$(printf '%s\n' "${DEV_PKGS[@]}" | gum choose --no-limit --selected="$DEV_PKGS_CSV" --header "Select dev packages to install:")
 
-echo "==> Checking skhd-zig..."
-if brew list skhd-zig &>/dev/null 2>&1; then
-  echo "skhd-zig already installed."
-else
-  echo "Installing skhd-zig..."
-  brew install jackielii/tap/skhd-zig
-  echo "skhd-zig installed."
-fi
+while IFS= read -r pkg; do
+  [[ -z "$pkg" ]] && continue
+  case "$pkg" in
+    yabai)    install_pkg yabai asmvik/formulae/yabai ;;
+    skhd-zig) install_pkg skhd-zig jackielii/tap/skhd-zig ;;
+    *)        install_pkg "$pkg" ;;
+  esac
+done <<< "$SELECTED"
 
-for pkg in k9s git gh ffmpeg awscli just; do
-  echo "==> Checking $pkg..."
-  if brew list "$pkg" &>/dev/null 2>&1; then
-    echo "$pkg already installed."
-  else
-    echo "Installing $pkg..."
-    yes | brew install "$pkg"
-    echo "$pkg installed."
-  fi
-done
-
-# ─── Dock ─────────────────────────────────────────────────────────────────────
-
-echo "==> Checking dockutil..."
-if brew list dockutil &>/dev/null 2>&1; then
-  echo "dockutil already installed."
-else
-  echo "Installing dockutil..."
-  brew install dockutil
-  echo "dockutil installed."
-fi
+# ─── Configs ─────────────────────────────────────────────────────────────────────
 
 echo "==> Configuring Ghostty..."
 mkdir -p "$HOME/.config/ghostty"
@@ -130,6 +103,10 @@ echo "Karabiner configured."
 echo "==> Setting wallpaper..."
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$SCRIPT_DIR/wallpaper/wallpaper.jpg\""
 echo "Wallpaper set."
+
+# ─── Dock ─────────────────────────────────────────────────────────────────────
+
+install_pkg dockutil
 
 echo "==> Configuring Dock..."
 defaults write com.apple.dock launchanim -bool false
