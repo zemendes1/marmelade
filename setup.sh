@@ -105,6 +105,11 @@ else
   echo "dockutil installed."
 fi
 
+echo "==> Configuring Ghostty..."
+mkdir -p "$HOME/.config/ghostty"
+cp "$SCRIPT_DIR/config/ghostty/config" "$HOME/.config/ghostty/config"
+echo "Ghostty configured."
+
 echo "==> Configuring Zed settings..."
 mkdir -p "$HOME/.config/zed"
 cp "$SCRIPT_DIR/config/zed/settings.json" "$HOME/.config/zed/settings.json"
@@ -130,6 +135,7 @@ echo "==> Configuring Dock..."
 defaults write com.apple.dock launchanim -bool false
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.WindowManager StandardHideWidgets -int 1
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
 defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock mineffect -string "scale"
 dockutil --remove all --no-restart
@@ -144,7 +150,12 @@ dockutil --add /Applications/Zed.app --no-restart
 dockutil --add /Applications/DBeaver.app --no-restart
 dockutil --add /System/Applications/System\ Settings.app --no-restart
 killall Dock
+killall ControlCenter
 echo "Dock configured."
+
+echo "==> Enabling Dark Mode..."
+osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
+echo "Dark Mode enabled."
 
 echo "==> Configuring Lock Screen..."
 defaults write com.apple.screensaver askForPassword -bool true
@@ -158,6 +169,13 @@ if ! defaults read com.apple.HIToolbox AppleEnabledInputSources 2>/dev/null | gr
 fi
 defaults write com.apple.TextInputMenu visible -bool true
 echo "Keyboard configured."
+
+echo "==> Configuring Login Items..."
+for app in "Karabiner-Elements" "Caffeine" "Bluesnooze" "noTunes"; do
+  osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"/Applications/$app.app\", hidden:false}" >/dev/null 2>&1 || true
+  echo "$app added to login items."
+done
+echo "Login Items configured."
 
 echo ""
 echo "==> Done! Please restart your Mac for all changes to take effect."
