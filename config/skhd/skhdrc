@@ -1,5 +1,5 @@
 
-cmd - return : open -a Ghostty
+cmd - return : open -na Ghostty
 
 cmd - 1 : yabai -m space --focus 1
 cmd - 2 : yabai -m space --focus 2
