@@ -152,8 +152,10 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 echo "Lock Screen configured."
 
 echo "==> Configuring Keyboard..."
-defaults write com.apple.HIToolbox AppleEnabledInputSources -array \
-  '<dict><key>Bundle ID</key><string>com.apple.keylayout.ABC</string><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>252</integer><key>KeyboardLayout Name</key><string>ABC</string></dict>'
+if ! defaults read com.apple.HIToolbox AppleEnabledInputSources 2>/dev/null | grep -q "com.apple.keylayout.ABC"; then
+  defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add \
+    '<dict><key>Bundle ID</key><string>com.apple.keylayout.ABC</string><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>252</integer><key>KeyboardLayout Name</key><string>ABC</string></dict>'
+fi
 defaults write com.apple.TextInputMenu visible -bool true
 echo "Keyboard configured."
 
