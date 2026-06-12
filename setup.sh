@@ -83,7 +83,7 @@ else
   echo "skhd-zig installed."
 fi
 
-for pkg in k9s git gh ffmpeg awscli; do
+for pkg in k9s git gh ffmpeg awscli just; do
   echo "==> Checking $pkg..."
   if brew list "$pkg" &>/dev/null 2>&1; then
     echo "$pkg already installed."
@@ -127,7 +127,6 @@ osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \
 echo "Wallpaper set."
 
 echo "==> Configuring Dock..."
-defaults write com.apple.TextInputMenu visible -bool true
 defaults write com.apple.dock launchanim -bool false
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.WindowManager StandardHideWidgets -int 1
@@ -146,6 +145,17 @@ dockutil --add /Applications/DBeaver.app --no-restart
 dockutil --add /System/Applications/System\ Settings.app --no-restart
 killall Dock
 echo "Dock configured."
+
+echo "==> Configuring Lock Screen..."
+defaults write com.apple.screensaver askForPassword -bool true
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+echo "Lock Screen configured."
+
+echo "==> Configuring Keyboard..."
+defaults write com.apple.HIToolbox AppleEnabledInputSources -array \
+  '<dict><key>Bundle ID</key><string>com.apple.keylayout.ABC</string><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>252</integer><key>KeyboardLayout Name</key><string>ABC</string></dict>'
+defaults write com.apple.TextInputMenu visible -bool true
+echo "Keyboard configured."
 
 echo ""
 echo "==> Done! Please restart your Mac for all changes to take effect."
