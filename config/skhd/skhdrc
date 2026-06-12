@@ -1,5 +1,6 @@
 
 cmd - return : open -na Ghostty
+cmd - e : zed -n
 
 cmd - 1 : yabai -m space --focus 1
 cmd - 2 : yabai -m space --focus 2

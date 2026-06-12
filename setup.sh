@@ -139,6 +139,11 @@ echo "Dock configured."
 
 # ─── System ──────────────────────────────────────────────────────────────────
 
+echo "==> Disabling Spotlight shortcuts..."
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>49</integer><integer>1048576</integer></array><key>type</key><string>standard</string></dict></dict>'
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>49</integer><integer>1572864</integer></array><key>type</key><string>standard</string></dict></dict>'
+echo "Spotlight shortcuts disabled."
+
 echo "==> Enabling Dark Mode..."
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
 echo "Dark Mode enabled."
