@@ -102,11 +102,6 @@ mkdir -p "$HOME/.config/skhd"
 cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
 echo "skhd configured."
 
-echo "==> Configuring Karabiner..."
-mkdir -p "$HOME/.config/karabiner"
-cp "$SCRIPT_DIR/config/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
-echo "Karabiner configured."
-
 echo "==> Setting wallpaper..."
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$SCRIPT_DIR/wallpaper/wallpaper.jpg\""
 echo "Wallpaper set."
@@ -144,6 +139,15 @@ defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 '<dic
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>49</integer><integer>1572864</integer></array><key>type</key><string>standard</string></dict></dict>'
 echo "Spotlight shortcuts disabled."
 
+echo "==> Disabling Launchpad (F4) shortcut..."
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 160 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>118</integer><integer>0</integer></array><key>type</key><string>standard</string></dict></dict>'
+echo "Launchpad shortcut disabled."
+
+echo "==> Disabling Input Sources (language switching) shortcuts..."
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>65535</integer><integer>0</integer></array><key>type</key><string>standard</string></dict></dict>'
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 61 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>65535</integer><integer>0</integer></array><key>type</key><string>standard</string></dict></dict>'
+echo "Input Sources shortcuts disabled."
+
 echo "==> Enabling Dark Mode..."
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
 echo "Dark Mode enabled."
@@ -161,10 +165,6 @@ fi
 defaults write com.apple.TextInputMenu visible -bool true
 echo "Keyboard configured."
 
-echo "==> Configuring Login Items..."
-for app in "Karabiner-Elements" "Caffeine" "Bluesnooze" "noTunes"; do
-  osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"/Applications/$app.app\", hidden:false}" >/dev/null 2>&1 || true
-  echo "$app added to login items."
 done
 echo "Login Items configured."
 
