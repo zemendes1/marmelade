@@ -54,7 +54,7 @@ install_apps() {
 
 PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microsoft-teams claude-code spotify)
 DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
-UTILITIES=(notunes bluesnooze caffeine karabiner-elements raycast neardrop ffmpeg)
+UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg)
 
 # ─── Apps ────────────────────────────────────────────────────────────────────
 
@@ -102,12 +102,18 @@ mkdir -p "$HOME/.config/skhd"
 cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
 echo "skhd configured."
 
+echo "==> Configuring openfortivpn..."
+sudo mkdir -p /etc/openfortivpn
+sudo cp "$SCRIPT_DIR/config/openfortivpn/config" /etc/openfortivpn/config
+echo "openfortivpn configured."
+
 echo "==> Remapping F4 Spotlight media key to standard F4 (for skhd)..."
 mkdir -p "$HOME/Library/LaunchAgents"
-cp "$SCRIPT_DIR/config/launchagents/com.user.hidutil.f4-remap.plist" "$HOME/Library/LaunchAgents/com.user.hidutil.f4-remap.plist"
-launchctl bootout "gui/$(id -u)/com.user.hidutil.f4-remap" 2>/dev/null || true
-launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.user.hidutil.f4-remap.plist"
-echo "F4 remapped."
+cp "$SCRIPT_DIR/config/launchagents/com.user.hidutil.fkeys-remap.plist" "$HOME/Library/LaunchAgents/com.user.hidutil.fkeys-remap.plist"
+launchctl bootout "gui/$(id -u)/com.user.hidutil.fkeys-remap" 2>/dev/null || true
+launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.user.hidutil.fkeys-remap.plist" || true
+# --set replaces the entire UserKeyMapping table, so keep all remaps in this one plist.
+echo "F4 remap registered (takes effect on next login)."
 
 echo "==> Setting wallpaper..."
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$SCRIPT_DIR/wallpaper/wallpaper.jpg\""

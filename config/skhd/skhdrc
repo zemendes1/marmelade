@@ -14,6 +14,7 @@
 cmd - return : open -na Ghostty
 cmd - e : zed -n
 f4 : open -na Raycast
+f5 : open -na Zen
 
 # Yabai Window Management
 
