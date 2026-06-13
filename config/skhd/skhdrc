@@ -27,3 +27,13 @@ cmd - 6 : yabai -m space --focus 6
 cmd - 7 : yabai -m space --focus 7
 cmd - 8 : yabai -m space --focus 8
 cmd - 9 : yabai -m space --focus 9
+
+cmd - down : yabai -m window --focus south
+cmd - up : yabai -m window --focus north
+cmd - left : yabai -m window --focus west
+cmd - right : yabai -m window --focus east
+
+cmd + shift - down : yabai -m window --swap south
+cmd + shift - up : yabai -m window --swap north
+cmd + shift - left : yabai -m window --swap west
+cmd + shift - right : yabai -m window --swap east
