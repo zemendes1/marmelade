@@ -54,7 +54,7 @@ install_apps() {
 
 PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microsoft-teams claude-code spotify)
 DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
-UTILITIES=(notunes bluesnooze caffeine karabiner-elements raycast neardrop)
+UTILITIES=(notunes bluesnooze caffeine karabiner-elements raycast neardrop ffmpeg)
 
 # ─── Apps ────────────────────────────────────────────────────────────────────
 
@@ -65,7 +65,7 @@ install_apps "Utilities" "${UTILITIES[@]}"
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 echo "==> Development Packages"
-DEV_PKGS=(yabai skhd-zig k9s git gh ffmpeg awscli just lazygit lazydocker)
+DEV_PKGS=(yabai skhd-zig k9s git gh  awscli just lazygit lazydocker openfortivpn)
 DEV_PKGS_CSV=$(IFS=,; echo "${DEV_PKGS[*]}")
 SELECTED=$(printf '%s\n' "${DEV_PKGS[@]}" | gum choose --no-limit --selected="$DEV_PKGS_CSV" --header "Select dev packages to install:")
 

@@ -1,0 +1,6 @@
+host = "<paste-host-here>"
+port = 443
+username = "<paste-username-here>"
+password = "<paste-password-here>"
+realm = "<paste-realm-here>"
+trusted-cert = "<paste-certificate-here>"
