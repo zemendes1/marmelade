@@ -54,7 +54,7 @@ install_apps() {
 
 PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microsoft-teams claude-code spotify)
 DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
-UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg)
+UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg hammerspoon)
 
 # ─── Apps ────────────────────────────────────────────────────────────────────
 
@@ -103,9 +103,12 @@ cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
 echo "skhd configured."
 
 echo "==> Configuring openfortivpn..."
-sudo mkdir -p /etc/openfortivpn
-sudo cp "$SCRIPT_DIR/config/openfortivpn/config" /etc/openfortivpn/config
-echo "openfortivpn configured."
+if [ ! -f "/opt/homebrew/etc/openfortivpn/openfortivpn/config" ]; then
+    sudo cp "$SCRIPT_DIR/config/openfortivpn/config" /opt/homebrew/etc/openfortivpn/openfortivpn/config
+    echo "openfortivpn configured."
+else
+    echo "openfortivpn already configured, skipping."
+fi
 
 echo "==> Remapping F4 Spotlight media key to standard F4 (for skhd)..."
 mkdir -p "$HOME/Library/LaunchAgents"
