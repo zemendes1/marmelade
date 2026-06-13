@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.user.hidutil.f4-remap</string>
+    <string>com.user.hidutil.fkeys-remap</string>
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/hidutil</string>
         <string>property</string>
         <string>--set</string>
-        <string>{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0xC00000221,"HIDKeyboardModifierMappingDst":0x70000003D}]}</string>
+        <string>{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0xC00000221,"HIDKeyboardModifierMappingDst":0x70000003D},{"HIDKeyboardModifierMappingSrc":0xC000000CF,"HIDKeyboardModifierMappingDst":0x70000003E}]}</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
