@@ -133,6 +133,7 @@ defaults write com.apple.WindowManager StandardHideWidgets -int 1
 defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
 defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock mineffect -string "scale"
+defaults write com.apple.dock workspaces-auto-swoosh -bool false
 dockutil --remove all --no-restart
 dockutil --add /Applications/Zen.app --no-restart
 dockutil --add /Applications/Slack.app --no-restart
@@ -163,6 +164,11 @@ echo "==> Disabling Input Sources (language switching) shortcuts..."
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>65535</integer><integer>0</integer></array><key>type</key><string>standard</string></dict></dict>'
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 61 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>65535</integer><integer>0</integer></array><key>type</key><string>standard</string></dict></dict>'
 echo "Input Sources shortcuts disabled."
+
+echo "==> Disabling auto-rearrange Spaces..."
+defaults write com.apple.dock mru-spaces -bool false
+defaults write NSGlobalDomain AppleSpacesSwitchOnActivate -bool false
+echo "Auto-rearrange Spaces disabled."
 
 echo "==> Enabling Dark Mode..."
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'

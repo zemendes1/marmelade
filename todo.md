@@ -1,3 +1,4 @@
 # TODO
 
-F5 should open a new zen window. It's currently opening a new window and sending us to the currently open one.
+Bugs:
+- F5 opens a new browser but for some reason it does not open on the current Desktop but the one it was previously openned in.
