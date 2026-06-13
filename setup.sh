@@ -165,8 +165,5 @@ fi
 defaults write com.apple.TextInputMenu visible -bool true
 echo "Keyboard configured."
 
-done
-echo "Login Items configured."
-
 echo ""
 echo "==> Done! Please restart your Mac for all changes to take effect."
