@@ -102,6 +102,13 @@ mkdir -p "$HOME/.config/skhd"
 cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
 echo "skhd configured."
 
+echo "==> Remapping F4 Spotlight media key to standard F4 (for skhd)..."
+mkdir -p "$HOME/Library/LaunchAgents"
+cp "$SCRIPT_DIR/config/launchagents/com.user.hidutil.f4-remap.plist" "$HOME/Library/LaunchAgents/com.user.hidutil.f4-remap.plist"
+launchctl bootout "gui/$(id -u)/com.user.hidutil.f4-remap" 2>/dev/null || true
+launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.user.hidutil.f4-remap.plist"
+echo "F4 remapped."
+
 echo "==> Setting wallpaper..."
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$SCRIPT_DIR/wallpaper/wallpaper.jpg\""
 echo "Wallpaper set."
