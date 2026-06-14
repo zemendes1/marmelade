@@ -4,12 +4,17 @@ set -e
 
 # ─── Dock ─────────────────────────────────────────────────────────────────────
 
+echo "==> Hiding menu bar..."
+defaults write NSGlobalDomain _HIHideMenuBar -bool true
+echo "Menu bar hidden."
+
 echo "==> Configuring Dock..."
 defaults write com.apple.dock launchanim -bool false
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.WindowManager StandardHideWidgets -int 1
 defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
 defaults write com.apple.dock show-recents -bool false
+defaults write com.apple.dock static-only -bool true
 defaults write com.apple.dock mineffect -string "scale"
 defaults write com.apple.dock workspaces-auto-swoosh -bool false
 echo "Dock configured."
@@ -28,7 +33,6 @@ if ! defaults read com.apple.HIToolbox AppleEnabledInputSources 2>/dev/null | gr
   defaults write com.apple.HIToolbox AppleEnabledInputSources -array-add \
     '<dict><key>Bundle ID</key><string>com.apple.keylayout.ABC</string><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>252</integer><key>KeyboardLayout Name</key><string>ABC</string></dict>'
 fi
-defaults write com.apple.TextInputMenu visible -bool true
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 echo "Keyboard configured."

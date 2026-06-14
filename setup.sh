@@ -48,6 +48,7 @@ install_apps() {
         }
         ;;
       borders) install_pkg borders FelixKratz/formulae/borders ;;
+      sketchybar) install_pkg sketchybar FelixKratz/formulae/sketchybar ;;
       *) install_cask "$app" ;;
     esac
   done <<< "$selected"
@@ -55,7 +56,7 @@ install_apps() {
 
 PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microsoft-teams claude-code spotify)
 DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
-UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg hammerspoon borders)
+UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg hammerspoon borders sketchybar)
 
 # ─── Apps ────────────────────────────────────────────────────────────────────
 
@@ -113,6 +114,16 @@ cp "$SCRIPT_DIR/config/borders/bordersrc" "$HOME/.config/borders/bordersrc"
 chmod +x "$HOME/.config/borders/bordersrc"
 brew services start borders
 echo "borders configured."
+
+echo "==> Configuring sketchybar..."
+install_cask font-hack-nerd-font
+install_cask sf-symbols
+mkdir -p "$HOME/.config/sketchybar/plugins"
+cp "$SCRIPT_DIR/config/sketchybar/sketchybarrc" "$HOME/.config/sketchybar/sketchybarrc"
+cp -r "$SCRIPT_DIR/config/sketchybar/plugins/" "$HOME/.config/sketchybar/plugins/"
+chmod +x "$HOME/.config/sketchybar/plugins/"*.sh
+brew services start sketchybar
+echo "sketchybar configured."
 
 echo "==> Configuring openfortivpn..."
 if [ ! -f "/opt/homebrew/etc/openfortivpn/openfortivpn/config" ]; then
