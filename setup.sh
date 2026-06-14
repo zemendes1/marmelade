@@ -47,6 +47,7 @@ install_apps() {
           echo "NearDrop installed."
         }
         ;;
+      borders) install_pkg borders FelixKratz/formulae/borders ;;
       *) install_cask "$app" ;;
     esac
   done <<< "$selected"
@@ -54,7 +55,7 @@ install_apps() {
 
 PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microsoft-teams claude-code spotify)
 DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
-UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg hammerspoon)
+UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg hammerspoon borders)
 
 # ─── Apps ────────────────────────────────────────────────────────────────────
 
@@ -105,6 +106,13 @@ echo "==> Configuring skhd..."
 mkdir -p "$HOME/.config/skhd"
 cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
 echo "skhd configured."
+
+echo "==> Configuring borders..."
+mkdir -p "$HOME/.config/borders"
+cp "$SCRIPT_DIR/config/borders/bordersrc" "$HOME/.config/borders/bordersrc"
+chmod +x "$HOME/.config/borders/bordersrc"
+brew services start borders
+echo "borders configured."
 
 echo "==> Configuring openfortivpn..."
 if [ ! -f "/opt/homebrew/etc/openfortivpn/openfortivpn/config" ]; then
