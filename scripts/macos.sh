@@ -6,6 +6,7 @@ set -e
 
 echo "==> Hiding menu bar..."
 defaults write NSGlobalDomain _HIHideMenuBar -bool true
+defaults write -g SLSMenuBarUseBlurredAppearance -bool true
 echo "Menu bar hidden."
 
 echo "==> Configuring Dock..."
