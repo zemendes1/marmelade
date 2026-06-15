@@ -68,7 +68,7 @@ install_apps "Utilities" "${UTILITIES[@]}"
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 echo "==> Development Packages"
-DEV_PKGS=(yabai skhd-zig k9s git gh  awscli just lazygit lazydocker openfortivpn)
+DEV_PKGS=(yabai skhd-zig k9s git gh  awscli just lazygit lazydocker openfortivpn pre-commit)
 DEV_PKGS_CSV=$(IFS=,; echo "${DEV_PKGS[*]}")
 SELECTED=$(printf '%s\n' "${DEV_PKGS[@]}" | gum choose --no-limit --selected="$DEV_PKGS_CSV" --header "Select dev packages to install:")
 
@@ -107,7 +107,10 @@ echo "yabai configured."
 echo "==> Configuring skhd..."
 mkdir -p "$HOME/.config/skhd"
 cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
-sudo skhd --install-grabber
+
+if ! skhd --check-grabber &>/dev/null 2>&1; then
+  sudo skhd --install-grabber
+fi
 echo "skhd configured."
 
 echo "==> Configuring borders..."
