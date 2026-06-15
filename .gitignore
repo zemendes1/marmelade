@@ -1,2 +1,2 @@
-.aws/*
+config/.aws/*
 .DS_Store
