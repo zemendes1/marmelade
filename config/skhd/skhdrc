@@ -1,13 +1,8 @@
 
 # External keyboards: swap left_cmd <-> left_ctrl (Windows key layout)
 .device kbd1 { vendor: 0x258A, product: 0x013B }
-.device kbd2 { vendor: 0x0C45, product: 0x7664 }
-
 .remap lcmd [device kbd1] : lctrl
 .remap lctrl [device kbd1] : lcmd
-
-.remap lcmd [device kbd2] : lctrl
-.remap lctrl [device kbd2] : lcmd
 
 # App Shortcuts
 

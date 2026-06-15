@@ -107,6 +107,7 @@ echo "yabai configured."
 echo "==> Configuring skhd..."
 mkdir -p "$HOME/.config/skhd"
 cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
+sudo skhd --install-grabber
 echo "skhd configured."
 
 echo "==> Configuring borders..."
