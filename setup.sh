@@ -50,7 +50,7 @@ install_apps() {
       borders) install_pkg borders FelixKratz/formulae/borders ;;
       sketchybar) bash "$SCRIPT_DIR/scripts/install_sketchybar.sh" ;;
       *) install_cask "$app" ;;
-      
+
     esac
   done <<< "$selected"
 }
@@ -134,7 +134,7 @@ cp "$SCRIPT_DIR/config/launchagents/com.user.hidutil.fkeys-remap.plist" "$HOME/L
 launchctl bootout "gui/$(id -u)/com.user.hidutil.fkeys-remap" 2>/dev/null || true
 launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.user.hidutil.fkeys-remap.plist" || true
 # --set replaces the entire UserKeyMapping table, so keep all remaps in this one plist.
-echo "F4 remap registered (takes effect on next login)."
+echo "F4 + F5 remap registered (takes effect on next login)."
 
 echo "==> Setting wallpaper..."
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$SCRIPT_DIR/wallpaper/wallpaper.jpg\""
@@ -146,25 +146,14 @@ echo "==> Configuring git..."
 git config --global --get push.autoSetupRemote &>/dev/null || git config --global push.autoSetupRemote true
 echo "git configured."
 
-# ─── Dock ─────────────────────────────────────────────────────────────────────
+# ─── Final ─────────────────────────────────────────────────────────────────────
 
 install_pkg dockutil
 
-echo "==> Configuring Dock apps..."
+echo "==> Removing Dock apps..."
 dockutil --remove all --no-restart
-dockutil --add /Applications/Zen.app --no-restart
-dockutil --add /Applications/Slack.app --no-restart
-dockutil --add /Applications/Spotify.app --no-restart
-dockutil --add /Applications/Obsidian.app --no-restart
-dockutil --add /Applications/Linear.app --no-restart
-dockutil --add /Applications/Docker.app --no-restart
-dockutil --add /Applications/Ghostty.app --no-restart
-dockutil --add /Applications/Zed.app --no-restart
-dockutil --add /Applications/DBeaver.app --no-restart
-dockutil --add /System/Applications/System\ Settings.app --no-restart
 killall Dock
 killall ControlCenter
-echo "Dock configured."
 
 echo ""
 echo "==> Done! Please restart your Mac for all changes to take effect."
