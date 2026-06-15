@@ -140,6 +140,12 @@ echo "==> Setting wallpaper..."
 osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$SCRIPT_DIR/wallpaper/wallpaper.jpg\""
 echo "Wallpaper set."
 
+# ─── Git ─────────────────────────────────────────────────────────────────────
+
+echo "==> Configuring git..."
+git config --global --get push.autoSetupRemote &>/dev/null || git config --global push.autoSetupRemote true
+echo "git configured."
+
 # ─── Dock ─────────────────────────────────────────────────────────────────────
 
 install_pkg dockutil
