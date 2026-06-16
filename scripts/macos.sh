@@ -57,4 +57,5 @@ echo "Dark Mode enabled."
 echo "==> Configuring Lock Screen..."
 defaults write com.apple.screensaver askForPassword -bool true
 defaults write com.apple.screensaver askForPasswordDelay -int 0
+defaults -currentHost write com.apple.screensaver idleTime 60
 echo "Lock Screen configured."
