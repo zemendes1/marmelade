@@ -48,7 +48,8 @@ install_apps() {
         }
         ;;
       borders) install_pkg borders FelixKratz/formulae/borders ;;
-      sketchybar) bash "$SCRIPT_DIR/scripts/install_sketchybar.sh" ;;
+      sketchybar)        bash "$SCRIPT_DIR/scripts/install_sketchybar.sh" ;;
+      smudge-nightlight) bash "$SCRIPT_DIR/scripts/install_smudge_nightlight.sh" ;;
       *) install_cask "$app" ;;
 
     esac
@@ -57,7 +58,7 @@ install_apps() {
 
 PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microsoft-teams claude-code spotify)
 DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
-UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg hammerspoon borders sketchybar)
+UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg hammerspoon borders sketchybar smudge-nightlight)
 
 # ─── Apps ────────────────────────────────────────────────────────────────────
 
