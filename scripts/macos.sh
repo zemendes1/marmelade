@@ -46,6 +46,14 @@ defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 '<dic
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>49</integer><integer>1572864</integer></array><key>type</key><string>standard</string></dict></dict>'
 echo "Spotlight shortcuts disabled."
 
+echo "==> Disabling Launchpad shortcut (F4)..."
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 160 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>118</integer><integer>0</integer></array><key>type</key><string>standard</string></dict></dict>'
+echo "Launchpad shortcut disabled."
+
+echo "==> Disabling Dictation shortcut (F5)..."
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 162 '<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>65535</integer><integer>0</integer></array><key>type</key><string>standard</string></dict></dict>'
+echo "Dictation shortcut disabled."
+
 # ─── Appearance ───────────────────────────────────────────────────────────────
 
 echo "==> Enabling Dark Mode..."
