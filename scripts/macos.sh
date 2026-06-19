@@ -57,6 +57,8 @@ echo "Dictation shortcut disabled."
 # ─── Appearance ───────────────────────────────────────────────────────────────
 
 echo "==> Enabling Dark Mode..."
+defaults write NSGlobalDomain AppleInterfaceStyle Dark
+defaults delete NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically 2>/dev/null || true
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
 echo "Dark Mode enabled."
 
