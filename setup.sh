@@ -69,7 +69,7 @@ install_apps "Utilities" "${UTILITIES[@]}"
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 echo "==> Development Packages"
-DEV_PKGS=(yabai skhd-zig k9s git gh  awscli just lazygit lazydocker openfortivpn)
+DEV_PKGS=(yabai skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk)
 DEV_PKGS_CSV=$(IFS=,; echo "${DEV_PKGS[*]}")
 SELECTED=$(printf '%s\n' "${DEV_PKGS[@]}" | gum choose --no-limit --selected="$DEV_PKGS_CSV" --header "Select dev packages to install:")
 
@@ -78,6 +78,15 @@ while IFS= read -r pkg; do
   case "$pkg" in
     yabai)    install_pkg yabai asmvik/formulae/yabai ;;
     skhd-zig) install_pkg skhd-zig jackielii/tap/skhd-zig ;;
+    hunk)     install_pkg hunk modem-dev/tap/hunk ;;
+    git)
+      install_pkg git
+      if ! grep -q 'eval "$(/opt/homebrew/bin/brew shellenv)"' "$HOME/.zshrc" 2>/dev/null; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zshrc"
+        echo "Brew shellenv added to ~/.zshrc."
+      fi
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+      ;;
     *)        install_pkg "$pkg" ;;
   esac
 done <<< "$SELECTED"
@@ -145,6 +154,10 @@ echo "Wallpaper set."
 
 echo "==> Configuring git..."
 git config --global --get push.autoSetupRemote &>/dev/null || git config --global push.autoSetupRemote true
+git config --global --get pull.rebase         &>/dev/null || git config --global pull.rebase true
+if command -v hunk &>/dev/null; then
+  git config --global --get core.pager &>/dev/null || git config --global core.pager "hunk pager"
+fi
 echo "git configured."
 
 # ─── Final ─────────────────────────────────────────────────────────────────────
