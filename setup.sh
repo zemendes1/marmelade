@@ -69,7 +69,7 @@ install_apps "Utilities" "${UTILITIES[@]}"
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 echo "==> Development Packages"
-DEV_PKGS=(yabai skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk)
+DEV_PKGS=(yabai skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk jq media-control)
 DEV_PKGS_CSV=$(IFS=,; echo "${DEV_PKGS[*]}")
 SELECTED=$(printf '%s\n' "${DEV_PKGS[@]}" | gum choose --no-limit --selected="$DEV_PKGS_CSV" --header "Select dev packages to install:")
 
