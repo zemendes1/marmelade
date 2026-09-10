@@ -70,31 +70,6 @@ local wifi_bracket = sbar.add("bracket", "widgets.wifi.bracket", {
   popup = { align = "center", height = 30 }
 })
 
-local ssid = sbar.add("item", {
-  position = "popup." .. wifi_bracket.name,
-  icon = {
-    font = {
-      style = settings.font.style_map["Bold"]
-    },
-    string = icons.wifi.router,
-  },
-  width = popup_width,
-  align = "center",
-  label = {
-    font = {
-      size = 15,
-      style = settings.font.style_map["Bold"]
-    },
-    max_chars = 18,
-    string = "????????????",
-  },
-  background = {
-    height = 2,
-    color = colors.grey,
-    y_offset = -15
-  }
-})
-
 local hostname = sbar.add("item", {
   position = "popup." .. wifi_bracket.name,
   icon = {
@@ -199,9 +174,6 @@ local function toggle_details()
     sbar.exec("ipconfig getifaddr en0", function(result)
       ip:set({ label = result })
     end)
-    sbar.exec("ipconfig getsummary en0 | awk -F ' SSID : '  '/ SSID : / {print $2}'", function(result)
-      ssid:set({ label = result })
-    end)
     sbar.exec("networksetup -getinfo Wi-Fi | awk -F 'Subnet mask: ' '/^Subnet mask: / {print $2}'", function(result)
       mask:set({ label = result })
     end)
@@ -227,7 +199,6 @@ local function copy_label_to_clipboard(env)
   end)
 end
 
-ssid:subscribe("mouse.clicked", copy_label_to_clipboard)
 hostname:subscribe("mouse.clicked", copy_label_to_clipboard)
 ip:subscribe("mouse.clicked", copy_label_to_clipboard)
 mask:subscribe("mouse.clicked", copy_label_to_clipboard)
