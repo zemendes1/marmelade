@@ -3,9 +3,7 @@
 
 Marmelade is my own macOS setup.
 
-Manual Steps:
-
-- In Raycast you have to map the hotkey to be `Cmd+Space`.
+![Example](example.png)
 
 ## Hotkeys
 
@@ -33,6 +31,11 @@ Manual Steps:
 |--------|-----|
 | `Ctrl+Space` | Select previous input source (macOS default) |
 | `Ctrl+Option+Space` | Select next input source (macOS default) |
+
+
+### Manual Steps:
+
+- In Raycast you have to map the hotkey to be `Cmd+Space`.
 
 ## References
 
