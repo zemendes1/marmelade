@@ -41,7 +41,7 @@ Marmelade is my own macOS setup.
 
 I got the wallpaper from <https://m-26.jp/>.
 
-My Sketchybar Config comes from <https://github.com/FelixKratz/dotfiles>.
+My Sketchybar Config comes from <https://github.com/FelixKratz/dotfiles>. My modified version stays under GPL-3.0, see `config/sketchybar/LICENSE`.
 
 My Neovim (LazyVim) config comes from Omer Hamerman's dotfiles: <https://github.com/omerxx/dotfiles/tree/97b2213ad0e61c7a036290752e23497920978d55/nvim>.
 
