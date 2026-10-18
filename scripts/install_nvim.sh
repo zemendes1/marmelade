@@ -5,8 +5,9 @@ set -e
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 echo "==> Installing Neovim and LazyVim dependencies..."
-# fzf/rg/fd power the pickers (fzf-lua), tree-sitter-cli builds parsers, lazygit backs <leader>gg.
-brew install neovim fzf ripgrep fd tree-sitter-cli lazygit
+# fzf/rg/fd power the pickers (fzf-lua), tree-sitter-cli builds parsers, lazygit backs <leader>gg,
+# node/go let Mason install the npm- and go-based language servers and formatters.
+brew install neovim fzf ripgrep fd tree-sitter-cli lazygit node go
 
 echo "==> Configuring Neovim (LazyVim, from github.com/omerxx/dotfiles)..."
 rm -rf "$HOME/.config/nvim"
