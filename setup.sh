@@ -69,7 +69,7 @@ install_apps "Utilities" "${UTILITIES[@]}"
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 echo "==> Development Packages"
-DEV_PKGS=(yabai skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk jq media-control)
+DEV_PKGS=(yabai skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk jq media-control neovim)
 DEV_PKGS_CSV=$(IFS=,; echo "${DEV_PKGS[*]}")
 SELECTED=$(printf '%s\n' "${DEV_PKGS[@]}" | gum choose --no-limit --selected="$DEV_PKGS_CSV" --header "Select dev packages to install:")
 
@@ -79,6 +79,7 @@ while IFS= read -r pkg; do
     yabai)    install_pkg yabai asmvik/formulae/yabai ;;
     skhd-zig) install_pkg skhd-zig jackielii/tap/skhd-zig ;;
     hunk)     install_pkg hunk modem-dev/tap/hunk ;;
+    neovim)   bash "$SCRIPT_DIR/scripts/install_nvim.sh" ;;
     git)
       install_pkg git
       if ! grep -q 'eval "$(/opt/homebrew/bin/brew shellenv)"' "$HOME/.zshrc" 2>/dev/null; then
