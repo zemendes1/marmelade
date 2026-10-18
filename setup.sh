@@ -121,6 +121,14 @@ cp "$SCRIPT_DIR/config/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
 if ! skhd --check-grabber &>/dev/null 2>&1; then
   sudo skhd --install-grabber
 fi
+
+# skhd only applies .remap rules at startup, so keyboards plugged in later (dock after boot)
+# aren't remapped. This watcher reloads skhd whenever a keyboard is attached.
+mkdir -p "$HOME/.local/bin" "$HOME/Library/LaunchAgents"
+swiftc -O -o "$HOME/.local/bin/skhd-remap-watcher" "$SCRIPT_DIR/config/skhd/remap-watcher.swift"
+cp "$SCRIPT_DIR/config/launchagents/com.user.skhd-remap-watcher.plist" "$HOME/Library/LaunchAgents/com.user.skhd-remap-watcher.plist"
+launchctl bootout "gui/$(id -u)/com.user.skhd-remap-watcher" 2>/dev/null || true
+launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.user.skhd-remap-watcher.plist" || true
 echo "skhd configured."
 
 echo "==> Configuring borders..."
