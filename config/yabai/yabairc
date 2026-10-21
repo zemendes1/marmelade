@@ -22,7 +22,5 @@ yabai -m config mouse_action1 move
 # Set modifier + right-click drag to resize window (default: resize)
 yabai -m config mouse_action2 resize
 
-yabai -m rule --add app="^System Settings$" manage=off
-
 # Make yabai aware of sketchybar
 yabai -m config external_bar all:32:0
