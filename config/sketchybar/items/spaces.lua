@@ -8,7 +8,7 @@ local brackets = {}
 
 sbar.add("event", "aerospace_workspace_change")
 
-for i = 1, 9, 1 do
+for i = 1, 8, 1 do
   local space = sbar.add("item", "space." .. i, {
     icon = {
       font = { family = settings.font.numbers },

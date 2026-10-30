@@ -11,10 +11,10 @@ Marmelade is my own macOS setup.
 
 | Hotkey | Function |
 |--------|----------|
-| `Cmd+1..9` | Focus workspace 1–9 |
+| `Cmd+1..8` | Focus workspace 1–8 |
 | `Cmd+↑/↓/←/→` | Focus window (north/south/west/east) |
 | `Cmd+Shift+↑/↓/←/→` | Move window (north/south/west/east) |
-| `Cmd+Shift+1..9` | Move window to workspace 1–9 and focus |
+| `Cmd+Shift+1..8` | Move window to workspace 1–8 and focus |
 
 ### Application Shortcuts
 
