@@ -24,6 +24,7 @@ Marmelade is my own macOS setup.
 | `Cmd+E` | Open Zed |
 | `F4` or `Cmd+Space` | Open Raycast |
 | `F5` | Open Screenshot |
+| `Cmd+Shift+M` | Toggle SketchyBar (shows the macOS menu bar) |
 
 ### Other shortcuts
 
