@@ -11,3 +11,5 @@ cmd - e : zed -n
 f4 : open -a Raycast
 f5 : open -a Screenshot
 
+# Toggle sketchybar to reveal the native macOS menu bar
+cmd + shift - m : sketchybar --bar hidden=toggle
