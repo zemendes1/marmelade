@@ -6,7 +6,7 @@
 
 # App Shortcuts
 
-cmd - return : open -na Ghostty
+cmd - return : open -a "Rex Beta"
 cmd - e : zed -n
 f4 : open -a Raycast
 f5 : open -a Screenshot

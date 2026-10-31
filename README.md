@@ -20,7 +20,7 @@ Marmelade is my own macOS setup.
 
 | Hotkey | Function |
 |--------|----------|
-| `Cmd+Return` | Open Ghostty |
+| `Cmd+Return` | Open Rex |
 | `Cmd+E` | Open Zed |
 | `F4` or `Cmd+Space` | Open Raycast |
 | `F5` | Open Screenshot |
