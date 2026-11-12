@@ -69,7 +69,7 @@ install_apps "Utilities" "${UTILITIES[@]}"
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 echo "==> Development Packages"
-DEV_PKGS=(aerospace skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk jq media-control neovim)
+DEV_PKGS=(aerospace skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk jq media-control neovim starship)
 DEV_PKGS_CSV=$(IFS=,; echo "${DEV_PKGS[*]}")
 SELECTED=$(printf '%s\n' "${DEV_PKGS[@]}" | gum choose --no-limit --selected="$DEV_PKGS_CSV" --header "Select dev packages to install:")
 
@@ -102,6 +102,14 @@ echo "==> Configuring Ghostty..."
 mkdir -p "$HOME/.config/ghostty"
 cp "$SCRIPT_DIR/config/ghostty/config" "$HOME/.config/ghostty/config"
 echo "Ghostty configured."
+
+echo "==> Configuring Starship prompt..."
+mkdir -p "$HOME/.config"
+cp "$SCRIPT_DIR/config/starship/starship.toml" "$HOME/.config/starship.toml"
+if ! grep -q 'starship init zsh' "$HOME/.zshrc" 2>/dev/null; then
+  echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
+fi
+echo "Starship configured."
 
 echo "==> Configuring Zed settings..."
 mkdir -p "$HOME/.config/zed"
