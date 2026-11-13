@@ -1,0 +1,61 @@
+# AeroSpace config — replaces yabai (broken on macOS 27).
+# Ported from the old config/yabai/yabairc and the yabai bindings in config/skhd/skhdrc.
+# Use a single macOS desktop per display; AeroSpace workspaces replace macOS spaces.
+
+start-at-login = true
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Notify SketchyBar (items/spaces.lua) of workspace changes
+exec-on-workspace-change = ['/bin/bash', '-c',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+# Mouse follows focus when switching monitors
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# 12px gaps like yabai. Top: sketchybar is 40pt; built-in display frame already starts ~32pt down (notch), so 40+12-32 = 20; external = 40+12
+[gaps]
+inner.horizontal = 12
+inner.vertical   = 12
+outer.left       = 12
+outer.bottom     = 12
+outer.top        = [{ monitor.built-in = 20 }, 52]
+outer.right      = 12
+
+[mode.main.binding]
+# Focus window (yabai -m window --focus)
+cmd-left  = 'focus left'
+cmd-down  = 'focus down'
+cmd-up    = 'focus up'
+cmd-right = 'focus right'
+
+# Swap/move window (yabai -m window --swap)
+cmd-shift-left  = 'move left'
+cmd-shift-down  = 'move down'
+cmd-shift-up    = 'move up'
+cmd-shift-right = 'move right'
+
+# Switch workspace (yabai -m space --focus N)
+cmd-1 = 'workspace 1'
+cmd-2 = 'workspace 2'
+cmd-3 = 'workspace 3'
+cmd-4 = 'workspace 4'
+cmd-5 = 'workspace 5'
+cmd-6 = 'workspace 6'
+cmd-7 = 'workspace 7'
+cmd-8 = 'workspace 8'
+
+# Move window to workspace and follow (yabai -m window --space N && focus N)
+cmd-shift-1 = ['move-node-to-workspace 1', 'workspace 1']
+cmd-shift-2 = ['move-node-to-workspace 2', 'workspace 2']
+cmd-shift-3 = ['move-node-to-workspace 3', 'workspace 3']
+cmd-shift-4 = ['move-node-to-workspace 4', 'workspace 4']
+cmd-shift-5 = ['move-node-to-workspace 5', 'workspace 5']
+cmd-shift-6 = ['move-node-to-workspace 6', 'workspace 6']
+cmd-shift-7 = ['move-node-to-workspace 7', 'workspace 7']
+cmd-shift-8 = ['move-node-to-workspace 8', 'workspace 8']

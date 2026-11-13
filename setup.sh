@@ -21,7 +21,7 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 install_pkg()  { brew list "$1" &>/dev/null 2>&1 && echo "$1 already installed." || { yes | brew install "${2:-$1}" && echo "$1 installed."; }; }
-install_cask() { brew list --cask "$1" &>/dev/null 2>&1 && echo "$1 already installed." || { brew install --cask "$1" && echo "$1 installed."; }; }
+install_cask() { brew list --cask "$1" &>/dev/null 2>&1 && echo "$1 already installed." || { brew install --cask "${2:-$1}" && echo "$1 installed."; }; }
 
 echo "==> Checking Homebrew..."
 if command -v brew &>/dev/null; then
@@ -69,14 +69,14 @@ install_apps "Utilities" "${UTILITIES[@]}"
 # ─── CLI Tools ────────────────────────────────────────────────────────────────
 
 echo "==> Development Packages"
-DEV_PKGS=(yabai skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk jq media-control neovim)
+DEV_PKGS=(aerospace skhd-zig k9s git gh awscli just lazygit lazydocker openfortivpn hunk jq media-control neovim starship)
 DEV_PKGS_CSV=$(IFS=,; echo "${DEV_PKGS[*]}")
 SELECTED=$(printf '%s\n' "${DEV_PKGS[@]}" | gum choose --no-limit --selected="$DEV_PKGS_CSV" --header "Select dev packages to install:")
 
 while IFS= read -r pkg; do
   [[ -z "$pkg" ]] && continue
   case "$pkg" in
-    yabai)    install_pkg yabai asmvik/formulae/yabai ;;
+    aerospace) install_cask aerospace nikitabobko/tap/aerospace ;;
     skhd-zig) install_pkg skhd-zig jackielii/tap/skhd-zig ;;
     hunk)     install_pkg hunk modem-dev/tap/hunk ;;
     neovim)   bash "$SCRIPT_DIR/scripts/install_nvim.sh" ;;
@@ -103,17 +103,24 @@ mkdir -p "$HOME/.config/ghostty"
 cp "$SCRIPT_DIR/config/ghostty/config" "$HOME/.config/ghostty/config"
 echo "Ghostty configured."
 
+echo "==> Configuring Starship prompt..."
+mkdir -p "$HOME/.config"
+cp "$SCRIPT_DIR/config/starship/starship.toml" "$HOME/.config/starship.toml"
+if ! grep -q 'starship init zsh' "$HOME/.zshrc" 2>/dev/null; then
+  echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
+fi
+echo "Starship configured."
+
 echo "==> Configuring Zed settings..."
 mkdir -p "$HOME/.config/zed"
 cp "$SCRIPT_DIR/config/zed/settings.json" "$HOME/.config/zed/settings.json"
 echo "Zed settings applied."
 
-echo "==> Configuring yabai..."
-mkdir -p "$HOME/.config/yabai"
-cp "$SCRIPT_DIR/config/yabai/yabairc" "$HOME/.config/yabai/yabairc"
-chmod +x "$HOME/.config/yabai/yabairc"
-yabai --start-service
-echo "yabai configured."
+echo "==> Configuring AeroSpace..."
+mkdir -p "$HOME/.config/aerospace"
+cp "$SCRIPT_DIR/config/aerospace/aerospace.toml" "$HOME/.config/aerospace/aerospace.toml"
+open -a AeroSpace
+echo "AeroSpace configured (grant it Accessibility access when prompted)."
 
 echo "==> Configuring skhd..."
 mkdir -p "$HOME/.config/skhd"
