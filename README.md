@@ -16,6 +16,13 @@ Marmelade is my own macOS setup.
 | `Cmd+Shift+↑/↓/←/→` | Move window (north/south/west/east) |
 | `Cmd+Shift+1..8` | Move window to workspace 1–8 and focus |
 
+### Rex
+
+| Hotkey | Function |
+|--------|----------|
+| `Option+1..9` | Go to tab 1–9 |
+| `Cmd+Shift+[` / `Cmd+Shift+]` | Previous / next tab (Rex default) |
+
 ### Application Shortcuts
 
 | Hotkey | Function |

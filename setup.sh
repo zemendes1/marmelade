@@ -103,6 +103,12 @@ mkdir -p "$HOME/.config/ghostty"
 cp "$SCRIPT_DIR/config/ghostty/config" "$HOME/.config/ghostty/config"
 echo "Ghostty configured."
 
+echo "==> Configuring Rex..."
+mkdir -p "$HOME/.config/rex"
+cp "$SCRIPT_DIR/config/rex/init.lua" "$HOME/.config/rex/init.lua"
+rex config reload &>/dev/null || true
+echo "Rex configured."
+
 echo "==> Configuring Starship prompt..."
 mkdir -p "$HOME/.config"
 cp "$SCRIPT_DIR/config/starship/starship.toml" "$HOME/.config/starship.toml"
