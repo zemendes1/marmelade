@@ -47,6 +47,7 @@ install_apps() {
           echo "NearDrop installed."
         }
         ;;
+      nope)    install_cask nope zemendes1/tap/nope ;;
       borders) install_pkg borders FelixKratz/formulae/borders ;;
       sketchybar)        bash "$SCRIPT_DIR/scripts/install_sketchybar.sh" ;;
       smudge-nightlight) bash "$SCRIPT_DIR/scripts/install_smudge_nightlight.sh" ;;
@@ -58,7 +59,7 @@ install_apps() {
 
 PRODUCTIVITY=(zen keeper-password-manager slack linear obsidian onedrive microsoft-teams claude-code spotify)
 DEVELOPMENT=(zed docker dbeaver-community ghostty openmtp keka)
-UTILITIES=(notunes bluesnooze caffeine raycast neardrop ffmpeg hammerspoon borders sketchybar smudge-nightlight)
+UTILITIES=(nope bluesnooze caffeine raycast neardrop ffmpeg hammerspoon borders sketchybar smudge-nightlight)
 
 # ─── Apps ────────────────────────────────────────────────────────────────────
 

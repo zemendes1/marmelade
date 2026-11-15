@@ -4,10 +4,11 @@ set -e
 
 # ─── Dock ─────────────────────────────────────────────────────────────────────
 
-echo "==> Hiding menu bar..."
-defaults write NSGlobalDomain _HIHideMenuBar -bool true
+echo "==> Keeping menu bar visible..."
+defaults write NSGlobalDomain _HIHideMenuBar -bool false
 defaults write -g SLSMenuBarUseBlurredAppearance -bool true
-echo "Menu bar hidden."
+osascript -e 'tell application "System Events" to tell dock preferences to set autohide menu bar to false'
+echo "Menu bar always visible."
 
 echo "==> Configuring Dock..."
 defaults write com.apple.dock launchanim -bool false
