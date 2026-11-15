@@ -4,10 +4,12 @@ local settings = require("settings")
 local app_icons = require("helpers.app_icons")
 
 local spaces = {}
+local brackets = {}
 
-for i = 1, 10, 1 do
-  local space = sbar.add("space", "space." .. i, {
-    space = i,
+sbar.add("event", "aerospace_workspace_change")
+
+for i = 1, 8, 1 do
+  local space = sbar.add("item", "space." .. i, {
     icon = {
       font = { family = settings.font.numbers },
       string = i,
@@ -45,52 +47,16 @@ for i = 1, 10, 1 do
       border_width = 2
     }
   })
+  brackets[i] = space_bracket
 
   -- Padding space
-  sbar.add("space", "space.padding." .. i, {
-    space = i,
+  sbar.add("item", "space.padding." .. i, {
     script = "",
     width = settings.group_paddings,
   })
 
-  local space_popup = sbar.add("item", {
-    position = "popup." .. space.name,
-    padding_left= 5,
-    padding_right= 0,
-    background = {
-      drawing = true,
-      image = {
-        corner_radius = 9,
-        scale = 0.2
-      }
-    }
-  })
-
-  space:subscribe("space_change", function(env)
-    local selected = env.SELECTED == "true"
-    local color = selected and colors.grey or colors.bg2
-    space:set({
-      icon = { highlight = selected, },
-      label = { highlight = selected },
-      background = { border_color = selected and colors.black or colors.bg2 }
-    })
-    space_bracket:set({
-      background = { border_color = selected and colors.grey or colors.bg2 }
-    })
-  end)
-
-  space:subscribe("mouse.clicked", function(env)
-    if env.BUTTON == "other" then
-      space_popup:set({ background = { image = "space." .. env.SID } })
-      space:set({ popup = { drawing = "toggle" } })
-    else
-      local op = (env.BUTTON == "right") and "--destroy" or "--focus"
-      sbar.exec("yabai -m space " .. op .. " " .. env.SID)
-    end
-  end)
-
-  space:subscribe("mouse.exited", function(_)
-    space:set({ popup = { drawing = false } })
+  space:subscribe("mouse.clicked", function(_)
+    sbar.exec("aerospace workspace " .. i)
   end)
 end
 
@@ -121,23 +87,56 @@ local spaces_indicator = sbar.add("item", {
   }
 })
 
-space_window_observer:subscribe("space_windows_change", function(env)
-  local icon_line = ""
-  local no_app = true
-  for app, count in pairs(env.INFO.apps) do
-    no_app = false
-    local lookup = app_icons[app]
-    local icon = ((lookup == nil) and app_icons["Default"] or lookup)
-    icon_line = icon_line .. icon
+local function highlight(focused)
+  for i, space in pairs(spaces) do
+    local selected = tostring(i) == focused
+    space:set({
+      icon = { highlight = selected },
+      label = { highlight = selected },
+      background = { border_color = selected and colors.black or colors.bg2 }
+    })
+    brackets[i]:set({
+      background = { border_color = selected and colors.grey or colors.bg2 }
+    })
   end
+end
 
-  if (no_app) then
-    icon_line = " —"
-  end
-  sbar.animate("tanh", 10, function()
-    spaces[env.INFO.space]:set({ label = icon_line })
+local function update_icons()
+  sbar.exec("aerospace list-windows --all --format '%{workspace}|%{app-name}'", function(out)
+    local apps = {}
+    for line in string.gmatch(out or "", "[^\n]+") do
+      local ws, app = line:match("^(%d+)|(.*)$")
+      if ws then
+        apps[ws] = apps[ws] or {}
+        apps[ws][app] = true
+      end
+    end
+    for i, space in pairs(spaces) do
+      local icon_line = ""
+      for app, _ in pairs(apps[tostring(i)] or {}) do
+        icon_line = icon_line .. (app_icons[app] or app_icons["Default"])
+      end
+      if icon_line == "" then icon_line = " —" end
+      sbar.animate("tanh", 10, function()
+        space:set({ label = icon_line })
+      end)
+    end
   end)
+end
+
+space_window_observer:subscribe("aerospace_workspace_change", function(env)
+  highlight(env.FOCUSED_WORKSPACE)
+  update_icons()
 end)
+
+space_window_observer:subscribe({ "front_app_switched", "space_windows_change", "system_woke" }, function(_)
+  update_icons()
+end)
+
+sbar.exec("aerospace list-workspaces --focused", function(out)
+  highlight((out or ""):gsub("%s+", ""))
+end)
+update_icons()
 
 spaces_indicator:subscribe("swap_menus_and_spaces", function(env)
   local currently_on = spaces_indicator:query().icon.value == icons.switch.on
